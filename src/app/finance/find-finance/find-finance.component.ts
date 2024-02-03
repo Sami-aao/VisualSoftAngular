@@ -12,7 +12,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-
+import { CarService } from '../car.service';
+import { OnInit } from '@angular/core';
+import { Car } from './car.model';
 @Component({
   selector: 'app-find-finance',
   standalone: true,
@@ -26,11 +28,16 @@ import { RouterLink } from '@angular/router';
   styleUrl: './find-finance.component.sass',
   
 })
-export class FindFinanceComponent {
-  filters: string[] = ['all', 'article', 'listing', 'list', 'info', 'shopping', 'pricing', 'testimonial', 'post', 'interactive'];
+export class FindFinanceComponent implements OnInit {
+  filters: string[] = ['القسط الشهري', 'الموديل', 'الميزانية'];
   numberOfCards: any = {};
-  selectedFilter: string = 'all';
+  selectedFilter: string = 'القسط الشهري';
+  cars: Car[] = [];
+  constructor(private carService: CarService) {}
 
+  ngOnInit(): void {
+    this.cars = this.carService.getCars();
+  }
 
     /**
      * On filter change
@@ -46,3 +53,4 @@ export class FindFinanceComponent {
         //this._filterCards();
     }
  }
+
